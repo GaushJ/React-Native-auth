@@ -1,20 +1,20 @@
 import React from 'react'
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
- import  {  useState ,useEffect } from 'react'
- import { initializeApp } from "firebase/app";
- import {getAuth , createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
- 
-// import { auth } from '../firebase';
+import  {  useState ,useEffect } from 'react'
+import { initializeApp } from "firebase/app";
+import {getAuth , createUserWithEmailAndPassword, signInWithEmailAndPassword ,onAuthStateChanged} from 'firebase/auth'
 
 function LoginScreen(){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigation = useNavigation();
     
+    const navigation = useNavigation();
      useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged(user => {
+      
+      const unsubscribe = onAuthStateChanged(auth,user => {
+        
            if (user) {
              navigation.navigate("Home")
            }
@@ -34,25 +34,23 @@ function LoginScreen(){
       initializeApp(firebaseConfig);
       const auth = getAuth();
 
-      
-      
-      
-
+      //Signup Action
       const handleSignUp = (e) =>{
-          console.log("hello from handleSignup")
+          
           createUserWithEmailAndPassword(auth, email ,password)
           .then((credential)=>{
             alert('user created:',credential.user);
             console.log("user created");
-            
-
           })
           .catch((err)=>{
               alert(err.message)
           })
       }
+
+      //Login Action
       const handleLogin = () => {
-        signInWithEmailAndPassword(email,password)
+        console.log("hello from handleLogin")
+        signInWithEmailAndPassword(auth,email,password)
         .then((credential)=>{
           alert('user loggedin:',credential.user);
           console.log("user Logged in");
