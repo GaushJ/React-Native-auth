@@ -1,5 +1,7 @@
 # React-Native-auth
 
+#**Install Dependencies**
+
 **React Native authentication using firebase**
 >As I am new to React Native , I encountered ton of issues while installing and using React Native . There were issues while using Android Emulator I had to learn , solve issues and implement side by side .
 
