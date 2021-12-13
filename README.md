@@ -12,5 +12,8 @@
 **What after??**
 >I will try to fix all the issues by 14 december Tuesday 
 
+**Update**
+>Login Bug fixed : successfully Merged 
+
 
 
