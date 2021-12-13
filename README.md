@@ -17,7 +17,7 @@
 
 
 **Update**
->Login Bug fixed : successfully Merged 
+>Bug fix:Login page working
 
 >Bug fix: Navigation working
 
