@@ -9,14 +9,32 @@ import {
   View,
 } from "react-native";
 import { useState } from "react";
+import axios from "axios";
 
 function LoginScreen({ navigation: { navigate } }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [username, setUsername] = useState('');
 
-  //This does not work currently
   const navigation = useNavigation();
+
+  const handleLogin = (credentials) => {
+    const url = "http://localhost:5000/user/signin";
+
+    axios
+      .post(url, credentials)
+      .then((res) => {
+        const result = res.data;
+        const { message, status, data } = result;
+        if (status !== "SUCCESS") {
+          console.log("FAILED");
+        } else {
+          navigation.navigate("Home", { ...data[0] });
+        }
+      })
+      .catch((err) => {
+        console.log(err.JSON());
+      });
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -39,7 +57,7 @@ function LoginScreen({ navigation: { navigate } }) {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          // onPress={handleLogin}
+          onPress={handleLogin}
           style={styles.button}
         >
           <Text style={styles.buttonText}>Login</Text>
