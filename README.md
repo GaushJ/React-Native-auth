@@ -15,8 +15,6 @@
 **What is not working**
 >After Registering the Navigation did not work , I didnot have time to figure it out but I have written the logic for same in the code , there are only some issues ,
 
-**What after??**
->I will try to fix all the issues by 14 december Tuesday 
 
 **Update**
 >Login Bug fixed : successfully Merged 
