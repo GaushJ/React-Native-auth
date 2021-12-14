@@ -28,12 +28,11 @@ function LoginScreen({ navigation: { navigate } }) {
       const res = await client.post("/user/login", {
         ...values,
       });
-      // console.log(res.data.status);
+       console.log(res.data.status);
        if(res.data.status === "FAILED"){
          alert(res.data.message);
        }else{
          alert("Login Successfull");
-         setUser(true);
          navigation.navigate("Home");
        }
     }catch(err){

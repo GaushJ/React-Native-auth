@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import client from "../app/client";
 
 const RegisterScreen = ({ navigation: { navigate } }) => {
-
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,8 +36,8 @@ const RegisterScreen = ({ navigation: { navigate } }) => {
       if (res.data.status === "FAILED") {
         alert(res.data.message);
       } else {
-
         //if data is successfully fetched
+
         alert("Registration Successfull");
         navigation.navigate("Home");
       }
