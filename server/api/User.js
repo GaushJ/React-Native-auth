@@ -6,17 +6,22 @@ const User = require("../models/userSchema");
 //Signup
 router.post("/signup", (req, res) => {
   let { username, email, password } = req.body;
-
+  
+//If any of the fields is empty
   if (!username || !email || !password) {
     res.json({
       status: "FAILED",
       message: "Empty Input Fields",
     });
+    
+   //regex for email
   } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
     res.json({
       status: "FAILED",
       message: "Invalid email entered",
     });
+    
+    //Check password length
   } else if (password.length < 4) {
     res.json({
       status: "FAILED",
@@ -44,6 +49,7 @@ router.post("/signup", (req, res) => {
                 email,
                 password: hashedPassword,
               });
+            //creating new user in database
               newUser
                 .save()
                 .then((result) => {
