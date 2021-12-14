@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useState } from "react";
-import axios from "axios";
+import { useState} from "react";
+import client from "../app/client";
 
 function LoginScreen({ navigation: { navigate } }) {
   const [username, setUsername] = useState("");
@@ -17,25 +17,31 @@ function LoginScreen({ navigation: { navigate } }) {
 
   const navigation = useNavigation();
 
-  const handleLogin = (credentials) => {
-    const url = "http://localhost:5000/user/signin";
-
-    axios
-      .post(url, credentials)
-      .then((res) => {
-        const result = res.data;
-        const { message, status, data } = result;
-        if (status !== "SUCCESS") {
-          console.log("FAILED");
-        } else {
-          navigation.navigate("Home", { ...data[0] });
-        }
-      })
-      .catch((err) => {
-        console.log(err.JSON());
-      });
+  const values = {
+    username,
+    password,
   };
 
+
+  const handleLogin = async () => {
+    try{
+      const res = await client.post("/user/login", {
+        ...values,
+      });
+      // console.log(res.data.status);
+       if(res.data.status === "FAILED"){
+         alert(res.data.message);
+       }else{
+         alert("Login Successfull");
+         setUser(true);
+         navigation.navigate("Home");
+       }
+    }catch(err){
+      console.log(err)
+      alert(err.message)
+    }
+
+  };
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View style={styles.inputContainer}>
@@ -56,15 +62,12 @@ function LoginScreen({ navigation: { navigate } }) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={handleLogin}
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigate("Home")}
+          onPress={() => navigation.navigate("Register")}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Register</Text>
